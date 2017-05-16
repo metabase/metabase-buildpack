@@ -2,7 +2,7 @@
 
 set -eu
 
-METABASE_VERSION=`cat ./version`
+METABASE_VERSION=`cat ./bin/version`
 METABASE_DIR="$1/target/uberjar"
 METABASE_JAR="$METABASE_DIR/metabase.jar"
 METABASE_URL="http://downloads.metabase.com/$METABASE_VERSION/metabase.jar"
