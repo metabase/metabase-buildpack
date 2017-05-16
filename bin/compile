@@ -9,6 +9,6 @@ METABASE_URL="http://downloads.metabase.com/$METABASE_VERSION/metabase.jar"
 
 mkdir -p $METABASE_DIR
 
-echo -n "-----> Downloading Metabase... "
+echo -n "-----> Downloading Metabase... from $METABASE_URL to $METABASE_JAR"
 curl -s --retry 3 -o $METABASE_JAR -L $METABASE_URL
 echo "done"
