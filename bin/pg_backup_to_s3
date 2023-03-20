@@ -1,0 +1,26 @@
+# Set the script to fail fast if there
+# is an error or a missing variable
+
+set -eu
+set -o pipefail
+
+#!/bin/sh
+
+# Get db dump from heroku
+pg_dump -F c --no-acl --no-owner --quote-all-identifiers $DATABASE_URL > tmp/pg_backup.dump
+
+# Encrypt backup file using GPG passphrase
+gpg --yes --batch --passphrase=$PG_BACKUP_PASSWORD -c tmp/pg_backup.dump
+
+# Remove the plaintext backup file
+rm tmp/pg_backup.dump
+
+# Generate backup filename based
+# on the current date
+BACKUP_FILE_NAME="backup-$(date '+%Y-%m-%d_%H.%M').gpg"
+
+# Upload the file to S3 using AWS CLI
+aws s3 cp tmp/pg_backup.dump.gpg "s3://${PG_BACKUP_S3_BUCKET_NAME}/${BACKUP_FILE_NAME}"
+
+# Remove the encrypted backup file
+rm tmp/pg_backup.dump.gpg

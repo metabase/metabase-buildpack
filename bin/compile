@@ -4,7 +4,15 @@ set -eu
 
 METABASE_DIR="$1/target/uberjar"
 METABASE_JAR="$METABASE_DIR/metabase.jar"
-METABASE_URL="https://downloads.metabase.com/enterprise/latest/metabase.jar"
+METABASE_URL="https://downloads.metabase.com/enterprise/v1.44.5/metabase.jar"
+
+BUIILDPACK_BIN="$PWD/bin"
+APP_BIN="$1/bin"
+BACKUP_SCRIPT="pg_backup_to_s3"
+
+echo "Copying pg_backup_to_s3 to $APP_BIN"
+cp "$BUIILDPACK_BIN/$BACKUP_SCRIPT" "$APP_BIN/$BACKUP_SCRIPT"
+chmod +x "$APP_BIN/$BACKUP_SCRIPT"
 
 mkdir -p $METABASE_DIR
 
