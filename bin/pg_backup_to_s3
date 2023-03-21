@@ -6,6 +6,9 @@ set -o pipefail
 
 #!/bin/sh
 
+# Create tmp directory if does not exist
+mkdir -p tmp
+
 # Get db dump from heroku
 pg_dump -F c --no-acl --no-owner --quote-all-identifiers $DATABASE_URL > tmp/pg_backup.dump
 
